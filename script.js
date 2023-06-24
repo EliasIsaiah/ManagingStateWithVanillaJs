@@ -2,7 +2,7 @@ let state = [];
 let id = 0;
 let container = document.getElementById("container");
 
-function createBox(name, width, height, color, border) {
+function createBox(name, width, height, color, border, borderRadius = 0) {
     let box = document.createElement("div")
     box.style.height = height;
     box.style.width = width;
@@ -12,6 +12,7 @@ function createBox(name, width, height, color, border) {
     box.innerText = name;
     box.style.fontSize = "3rem";
     box.id = `box-${id}`;
+    box.style.borderRadius = borderRadius; 
 
     container.appendChild(box);
 
@@ -23,13 +24,14 @@ function createBox(name, width, height, color, border) {
         width,
         height,
         color,
-        border
+        border,
+        borderRadius
     })
 
     id++;
 }
 
-createBox("jude", "200px", "80px", "#c9c9c9", "10px solid black")
+createBox("jude", "200px", "80px", "#c9c9c9", "10px solid black", "30px")
 createBox("fred", "100px", "200px", "red", "10px solid black")
 createBox("elias", "150px", "100px", "rgb(255, 98, 46)", "5px solid black")
 
@@ -46,6 +48,14 @@ function sailorMoonTransformation(id, color) { // change color
     let boxFromState = boxFromStateArray[0];
     boxFromState.color = color;
     updateState(boxFromState);
+}
+
+function updateBorderRadius(id, borderRadius) {
+    let boxThatIWantToChangeTheBorderRadiusOf = document.getElementById(id);
+    boxThatIWantToChangeTheBorderRadiusOf.style.borderRadius = borderRadius;
+    let stateBox = state.filter(box => box.id === id).pop();
+    stateBox.borderRadius = borderRadius;
+    updateState(stateBox);
 }
 
 function updateState(changedBox, action = "update") {
